@@ -9,7 +9,7 @@ public class EdgeFieldTest {
 	@Before
 	public void setUp() throws Exception {
       testField = new EdgeField("1|Name");
-      runner();
+      //runner();
 	}
 	
 	public void runner() {
