@@ -79,15 +79,20 @@ public class MainTester{
       for(Object anObj : testObjs){
          if(anObj instanceof EdgeConnector){
             System.out.println("Now testing EdgeConnector: " + getConnectorStr((EdgeConnector)anObj));
-            //TODO: EdgeConnectorTest
+            //TODO: run EdgeConnector tests
          }
          else{
             System.out.println("Now testing EdgeField: " + ((EdgeField)anObj).toString());
-            //TODO: EdgeFieldTest            
+            //TODO: run EdgeField tests            
          }
       }
    }
    
+   /**
+    * Returns summary of EdgeConnector attributes
+    * @param obj  EdgeConnector
+    * @return summary of EdgeConnector attributes
+    */
    private String getConnectorStr(EdgeConnector obj){
       return obj.getNumConnector() + EdgeConvertFileParser.DELIM
            + obj.getEndPoint1() + EdgeConvertFileParser.DELIM
