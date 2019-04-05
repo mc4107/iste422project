@@ -11,6 +11,16 @@ public class EdgeFieldTest {
       testField = new EdgeField("1|Name");
       //runner();
 	}
+
+	/**
+	 * Constructor for test fixture
+	 * @param obj - the EdgeField to be tested
+	 */
+	public EdgeFieldTest(EdgeField obj){
+
+		//Set the private field to be the input object
+		this.testField = obj;
+	}
 	
 	public void runner() {
       //test accessors
@@ -28,21 +38,22 @@ public class EdgeFieldTest {
 	 
       //test mutators
       testSetTableID();
-   	testSetTableBound();
-   	testSetFieldBound();
-   	testSetDisallowNull();
+   	  testSetTableBound();
+   	  testSetFieldBound();
+   	  testSetDisallowNull();
       testSetIsPrimaryKey();
-   	testSetDefaultValue();
-   	testSetVarcharValue();
-   	testSetDataType();
+   	  testSetDefaultValue();
+   	  testSetVarcharValue();
+   	  testSetDataType();
    	
-      //test toString 
-   	testToString();
+      //test toString
+   	  testToString();
 	}
 
 	@Test
 	public void testGetNumFigure() {
 		assertEquals("numFigure was intialized to 1 via the constructor input string", 1, testField.getNumFigure());
+		System.out.println("This is a print statement to show that this tester is being called");
 	}
    
    @Test

@@ -83,7 +83,13 @@ public class MainTester{
          }
          else{
             System.out.println("Now testing EdgeField: " + ((EdgeField)anObj).toString());
-            //TODO: run EdgeField tests            
+            //TODO: run EdgeField tests
+
+            //Construct the new EdgeFieldTest
+            EdgeFieldTest EFTest = new EdgeFieldTest((EdgeField)anObj);
+
+            //Run the tests
+            EFTest.runner();
          }
       }
    }
