@@ -2,7 +2,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
 public class EdgeFieldTest {
    EdgeField testField;
 
@@ -12,15 +17,23 @@ public class EdgeFieldTest {
       runner();
 	}
 
+	@Parameterized.Parameters
+	public static Collection<Object[]> data(EdgeField EF){
+
+		EdgeFieldTest E = new EdgeFieldTest(EF);
+
+		return null;
+	}
+
 	/**
 	 * Constructor for test fixture
 	 * @param obj - the EdgeField to be tested
 	 */
-	//public EdgeFieldTest(EdgeField obj){
+	public EdgeFieldTest(EdgeField obj){
 
 		//Set the private field to be the input object
-	//	this.testField = obj;
-	//}
+		this.testField = obj;
+	}
 	
 	public void runner() {
       //test accessors
