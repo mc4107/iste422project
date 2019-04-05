@@ -106,8 +106,8 @@ public class MainTester{
     */
    private static void printHelpMsg(){
       System.out.println("Tester command line options:"
-                           + "\n\t-n\tfollowed by a test object argument for program to use"
-                           + "\n\t-f\tfollowed by a file name argument for a file that contains test objects for program to test with");
+                           + "\n\t-n\t\tfollowed by a test object string argument for program to use to test"
+                           + "\n\t-f\t\tfollowed by a file name argument for a file that contains test object strings for program to test with");
       System.exit(0);                 
    }
    
