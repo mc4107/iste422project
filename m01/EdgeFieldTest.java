@@ -9,18 +9,18 @@ public class EdgeFieldTest {
 	@Before
 	public void setUp() throws Exception {
       testField = new EdgeField("1|Name");
-      //runner();
+      runner();
 	}
 
 	/**
 	 * Constructor for test fixture
 	 * @param obj - the EdgeField to be tested
 	 */
-	public EdgeFieldTest(EdgeField obj){
+	//public EdgeFieldTest(EdgeField obj){
 
 		//Set the private field to be the input object
-		this.testField = obj;
-	}
+	//	this.testField = obj;
+	//}
 	
 	public void runner() {
       //test accessors
@@ -53,7 +53,6 @@ public class EdgeFieldTest {
 	@Test
 	public void testGetNumFigure() {
 		assertEquals("numFigure was intialized to 1 via the constructor input string", 1, testField.getNumFigure());
-		System.out.println("This is a print statement to show that this tester is being called");
 	}
    
    @Test

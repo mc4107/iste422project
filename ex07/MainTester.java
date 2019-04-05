@@ -1,3 +1,7 @@
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
 import java.util.*;  //for Scanner & ArrayList
 import java.io.*;    //for File & IOExceptions
 
@@ -86,10 +90,20 @@ public class MainTester{
             //TODO: run EdgeField tests
 
             //Construct the new EdgeFieldTest
-            EdgeFieldTest EFTest = new EdgeFieldTest((EdgeField)anObj);
+            //EdgeFieldTest EFTest = new EdgeFieldTest((EdgeField)anObj);
+
+            JUnitCore junit = new JUnitCore();
+            Result result = junit.run(EdgeFieldTest.class);
+
+            for (Failure failure : result.getFailures()) {
+               System.out.println(failure.toString());
+            }
+
+            System.out.println(result.wasSuccessful());
+
 
             //Run the tests
-            EFTest.runner();
+            //EFTest.runner();
          }
       }
    }
