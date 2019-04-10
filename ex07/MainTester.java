@@ -90,17 +90,13 @@ public class MainTester{
             //TODO: run EdgeField tests
 
             //Construct the new EdgeFieldTest
-            //EdgeFieldTest EFTest = new EdgeFieldTest((EdgeField)anObj);
+            EdgeFieldTest EFTest = new EdgeFieldTest();
 
-            JUnitCore junit = new JUnitCore();
-            Result result = junit.run(EdgeFieldTest.class);
 
-            for (Failure failure : result.getFailures()) {
-               System.out.println(failure.toString());
-            }
+            //Call the tester
+            EFTest.prepare((EdgeField)anObj);
 
-            System.out.println(result.wasSuccessful());
-
+            EFTest.runner();
 
             //Run the tests
             //EFTest.runner();

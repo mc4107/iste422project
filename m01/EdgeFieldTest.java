@@ -1,38 +1,22 @@
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.util.Collection;
 
-@RunWith(Parameterized.class)
+//@RunWith(Parameterized.class)
 public class EdgeFieldTest {
    EdgeField testField;
 
-	@Before
-	public void setUp() throws Exception {
-      testField = new EdgeField("1|Name");
-      runner();
-	}
-
-	@Parameterized.Parameters
-	public static Collection<Object[]> data(EdgeField EF){
-
-		EdgeFieldTest E = new EdgeFieldTest(EF);
-
-		return null;
-	}
 
 	/**
-	 * Constructor for test fixture
-	 * @param obj - the EdgeField to be tested
+	 * A fake constructor that sets the private variable
+	 * @param testObj
 	 */
-	public EdgeFieldTest(EdgeField obj){
+	public void prepare(EdgeField testObj){
 
-		//Set the private field to be the input object
-		this.testField = obj;
+		//Set the private variable
+		this.testField = testObj;
+
 	}
 	
 	public void runner() {
@@ -66,16 +50,19 @@ public class EdgeFieldTest {
 	@Test
 	public void testGetNumFigure() {
 		assertEquals("numFigure was intialized to 1 via the constructor input string", 1, testField.getNumFigure());
+		System.out.println("Test getNumFigure: Passed");
 	}
    
    @Test
 	public void testGetName() {
 		assertEquals("name was intialized to \"Name\" via the constructor input string", "Name", testField.getName());
+	   System.out.println("Test getName: Passed");
 	}
    
    @Test
 	public void testGetTableID() {
 		assertEquals("tableID was intialized to 0 in the constructor", 0, testField.getTableID());
+	   System.out.println("Test getTableID: Passed");
 	}
    
    @Test
@@ -83,11 +70,13 @@ public class EdgeFieldTest {
 		int testVal = 1;
       testField.setTableID(testVal);
       assertEquals("tableID should be set to " + testVal, testVal, testField.getTableID());
+	   System.out.println("Test setTableID: Passed");
 	}
    
    @Test
 	public void testGetTableBound() {
 		assertEquals("tableBound was intialized to 0 in the constructor", 0, testField.getTableBound());
+	   System.out.println("Test getTableBound: Passed");
 	}
    
    @Test
@@ -95,11 +84,13 @@ public class EdgeFieldTest {
 		int testVal = 1;
       testField.setTableBound(testVal);
       assertEquals("tableBound should be set to " + testVal, testVal, testField.getTableBound());
+	   System.out.println("Test setTableBound: Passed");
 	}
    
    @Test
 	public void testGetFieldBound() {
 		assertEquals("fieldBound was intialized to 0 in the constructor", 0, testField.getFieldBound());
+	   System.out.println("Test getFieldBound: Passed");
 	}
    
    @Test
@@ -107,11 +98,13 @@ public class EdgeFieldTest {
 		int testVal = 1;
       testField.setFieldBound(testVal);
       assertEquals("fieldBound should be set to " + testVal, testVal, testField.getFieldBound());
+	   System.out.println("Test setFieldBound: Passed");
 	}
    
    @Test
 	public void testGetDisallowNull() {
 		assertEquals("disallowNull was intialized to false in the constructor", false, testField.getDisallowNull());
+	   System.out.println("Test getDisallowNull: Passed");
 	}
    
    @Test
@@ -119,11 +112,13 @@ public class EdgeFieldTest {
 		boolean testVal = true;
       testField.setDisallowNull(testVal);
       assertEquals("disallowNull should be set to " + testVal, testVal, testField.getDisallowNull());
+	   System.out.println("Test setDisallowNull: Passed");
 	}
    
    @Test
 	public void testGetIsPrimaryKey() {
 		assertEquals("isPrimaryKey was intialized to false in the constructor", false, testField.getIsPrimaryKey());
+	   System.out.println("Test getIsPrimaryKey: Passed");
 	}
    
    @Test
@@ -131,11 +126,13 @@ public class EdgeFieldTest {
 		boolean testVal = true;
       testField.setIsPrimaryKey(testVal);
       assertEquals("isPrimaryKey should be set to " + testVal, testVal, testField.getIsPrimaryKey());
+	   System.out.println("Test setIsPrimaryKey: Passed");
 	}
    
    @Test
 	public void testGetDefaultValue() {
 		assertEquals("defaultValue was intialized to \"\" in the constructor", "", testField.getDefaultValue());
+	   System.out.println("Test getDefaultValue: Passed");
 	}
    
    @Test
@@ -143,11 +140,13 @@ public class EdgeFieldTest {
 		String testVal = "unknown";
       testField.setDefaultValue(testVal);
       assertEquals("defaultValue should be set to " + testVal, testVal, testField.getDefaultValue());
+	   System.out.println("Test setDefaultValue: Passed");
 	}
    
    @Test
 	public void testGetVarcharValue() {
 		assertEquals("varcharValue was intialized to " + EdgeField.VARCHAR_DEFAULT_LENGTH + " in the constructor", EdgeField.VARCHAR_DEFAULT_LENGTH, testField.getVarcharValue());
+	   System.out.println("Test testGetVarcharValue: Passed");
 	}
    
    @Test
@@ -162,11 +161,13 @@ public class EdgeFieldTest {
       int goodTestVal = 2;
       testField.setVarcharValue(goodTestVal);
       assertEquals("varcharValue should be set to " + goodTestVal, goodTestVal, testField.getVarcharValue());
+	   System.out.println("Test varcharValue: Passed");
 	}
    
    @Test
 	public void testGetDataType() {
 		assertEquals("dataType was intialized to 0 in the constructor", 0, testField.getDataType());
+	   System.out.println("Test getDataType: Passed");
 	}
    
    @Test
@@ -189,12 +190,14 @@ public class EdgeFieldTest {
       int goodTestVal = strDataTypeLen - 1;
       testField.setDataType(goodTestVal);
       assertEquals("dataType should be set to " + goodTestVal, goodTestVal, testField.getDataType());
+	   System.out.println("Test setDataType: Passed");
 	}
    
    @Test
 	public void testGetStrDataType() {
       String[] expectedVal = {"Varchar",  "Boolean",  "Integer",  "Double"};
 		assertEquals("strDataType was intialized to {\"Varchar\", \"Boolean\", \"Integer\", \"Double\"} when it was declared at the top of the class", expectedVal, testField.getStrDataType());
+	   System.out.println("Test getStrDataType: Passed");
 	}
    
    @Test
@@ -203,6 +206,7 @@ public class EdgeFieldTest {
 		assertEquals("toString should return the values of all EdgeField attributes,  separated by a delimiter of \"" + EdgeConvertFileParser.DELIM + "\"", 
       testField.getNumFigure() + delim + testField.getName() + delim + testField.getTableID() + delim + testField.getTableBound() + delim + testField.getFieldBound() + delim + testField.getDataType() + delim + testField.getVarcharValue() + delim + testField.getIsPrimaryKey() + delim + testField.getDisallowNull() + delim + testField.getDefaultValue(), 
       testField.toString());
+	   System.out.println("Test toString: Passed");
 	}
 
 }
