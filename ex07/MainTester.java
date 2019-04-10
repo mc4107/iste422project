@@ -83,23 +83,22 @@ public class MainTester{
       for(Object anObj : testObjs){
          if(anObj instanceof EdgeConnector){
             System.out.println("Now testing EdgeConnector: " + getConnectorStr((EdgeConnector)anObj));
-            //TODO: run EdgeConnector tests
+
+            //Construct the new EdgeConnectorTest
+            //TODO
+
          }
          else{
             System.out.println("Now testing EdgeField: " + ((EdgeField)anObj).toString());
-            //TODO: run EdgeField tests
 
             //Construct the new EdgeFieldTest
             EdgeFieldTest EFTest = new EdgeFieldTest();
 
-
             //Call the tester
             EFTest.prepare((EdgeField)anObj);
 
-            EFTest.runner();
-
             //Run the tests
-            //EFTest.runner();
+            EFTest.runner();
          }
       }
    }

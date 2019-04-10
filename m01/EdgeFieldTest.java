@@ -7,7 +7,6 @@ import org.junit.Test;
 public class EdgeFieldTest {
    EdgeField testField;
 
-
 	/**
 	 * A fake constructor that sets the private variable
 	 * @param testObj
