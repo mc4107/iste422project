@@ -86,6 +86,15 @@ public class MainTester{
 
             //Construct the new EdgeConnectorTest
             //TODO
+            
+            JUnitCore junit = new JUnitCore();
+            Result result = junit.run(EdgeConnectorTest.class);
+            
+            for (Failure failure : result.getFailures()){
+               System.out.println(failure.toString());
+            }
+            
+            System.out.println(result.wasSuccessful());
 
          }
          else{
