@@ -55,7 +55,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDTMenuBar;
    static JMenu jmDTFile, jmDTOptions, jmDTHelp;
    static JMenuItem jmiDTOpenEdge, jmiDTOpenSave, jmiDTSave, jmiDTSaveAs, jmiDTExit, jmiDTOptionsOutputLocation, jmiDTOptionsShowProducts, jmiDTHelpAbout;
-   static JMenuItem jmiDTHelp1, jmiDTHelp2, jmiDTHelp3;  //TODO: change variable names
+   static JMenuItem jmiDTHelpDDL, jmiDTHelp2, jmiDTHelp3;  //TODO: change variable names
    
    //Define Relations screen objects
    static JFrame jfDR;
@@ -68,7 +68,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDRMenuBar;
    static JMenu jmDRFile, jmDROptions, jmDRHelp;
    static JMenuItem jmiDROpenEdge, jmiDROpenSave, jmiDRSave, jmiDRSaveAs, jmiDRExit, jmiDROptionsOutputLocation, jmiDROptionsShowProducts, jmiDRHelpAbout;
-   static JMenuItem jmiDRHelp1, jmiDRHelp2, jmiDRHelp3;  //TODO: change variable names
+   static JMenuItem jmiDRHelpDDL, jmiDRHelp2, jmiDRHelp3;  //TODO: change variable names
    
    public EdgeConvertGUI() {
       menuListener = new EdgeMenuListener();
@@ -150,10 +150,10 @@ public class EdgeConvertGUI {
       jmDTHelp.add(jmiDTHelpAbout);
       
       //TODO: Change menu item (and variable/mnemonic) names
-      jmiDTHelp1 = new JMenuItem("Help 1");
-      jmiDTHelp1.setMnemonic(KeyEvent.VK_1);
-      jmiDTHelp1.addActionListener(menuListener);
-      jmDTHelp.add(jmiDTHelp1);
+      jmiDTHelpDDL = new JMenuItem("Creating a DDL");
+      jmiDTHelpDDL.setMnemonic(KeyEvent.VK_1);
+      jmiDTHelpDDL.addActionListener(menuListener);
+      jmDTHelp.add(jmiDTHelpDDL);
       jmiDTHelp2 = new JMenuItem("Help 2");
       jmiDTHelp2.setMnemonic(KeyEvent.VK_2);
       jmiDTHelp2.addActionListener(menuListener);
@@ -548,10 +548,10 @@ public class EdgeConvertGUI {
       jmDRHelp.add(jmiDRHelpAbout);
       
       //TODO: Change menu item (and variable/mnemonic) names
-      jmiDRHelp1 = new JMenuItem("Help 1");
-      jmiDRHelp1.setMnemonic(KeyEvent.VK_1);
-      jmiDRHelp1.addActionListener(menuListener);
-      jmDRHelp.add(jmiDRHelp1);
+      jmiDRHelpDDL = new JMenuItem("Creating a DDL");
+      jmiDRHelpDDL.setMnemonic(KeyEvent.VK_1);
+      jmiDRHelpDDL.addActionListener(menuListener);
+      jmDRHelp.add(jmiDRHelpDDL);
       jmiDRHelp2 = new JMenuItem("Help 2");
       jmiDRHelp2.setMnemonic(KeyEvent.VK_2);
       jmiDRHelp2.addActionListener(menuListener);
@@ -1306,8 +1306,18 @@ public class EdgeConvertGUI {
          }
          
          //TODO: Add help text to dialog and change jmi variable name if needed
-         if ((ae.getSource() == jmiDTHelp1) || (ae.getSource() == jmiDRHelp1)) {
-            JOptionPane.showMessageDialog(null, "HELP TEXT HERE");
+         if ((ae.getSource() == jmiDTHelpDDL) || (ae.getSource() == jmiDRHelpDDL)) {
+            JOptionPane joPane = new JOptionPane();
+            JOptionPane.showMessageDialog(null, "1) Open an edge or saved file under File menu item"
+                                            + "\n2) Use interface to make any changes to tables and relations"
+                                            + "\n3) Go to Options => \"Set Output File Definition Location\""
+                                            + "\n4) Using the file chooser, navigate to a directory that contains a java file with a class that extends EdgeConvertCreateDDL (e.g. CreateDDLMySQL)."
+                                            + "\n    Make sure that this class has been compiled (i.e. that there's a .class file with the same name in the directory).  Select this directory."
+                                            + "\n5) You will see a message listing which products may be used to create DDL statements.  Select OK."
+                                            + "\n6) Click \"Create DDL\" button at bottom right, select a product from the dropdown, and click OK."
+                                            + "\n7) Enter a database name as prompted and click OK."
+                                            + "\n8) Determine where you want to save the resulting SQL file using the file chooser.",
+            "Creating a DDL Help", JOptionPane.INFORMATION_MESSAGE);
          }
          else if ((ae.getSource() == jmiDTHelp2) || (ae.getSource() == jmiDRHelp2)) {
             JOptionPane.showMessageDialog(null, "HELP TEXT HERE");
