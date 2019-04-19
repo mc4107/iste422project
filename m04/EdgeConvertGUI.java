@@ -1171,16 +1171,22 @@ public class EdgeConvertGUI {
    
    class CreateDDLButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
-         while (outputDir == null) {
+         if (outputDir == null) {
             JOptionPane.showMessageDialog(null, "You have not selected a path that contains valid output definition files yet.\nPlease select a path now.");
             setOutputDir();
          }
-         getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
-         sqlString = getSQLStatements();
-         if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
-            return;
+
+         //Only execute this code if the user actually chose a path (ie. if they hit cancel, function will return
+         if (outputDir != null) {
+            getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
+            sqlString = getSQLStatements();
+
+            if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
+                  return;
+            }
+
+            writeSQL(sqlString);
          }
-         writeSQL(sqlString);
       }
    }
 
@@ -1302,7 +1308,7 @@ public class EdgeConvertGUI {
          if ((ae.getSource() == jmiDTHelpAbout) || (ae.getSource() == jmiDRHelpAbout)) {
             JOptionPane.showMessageDialog(null, "EdgeConvert ERD To DDL Conversion Tool\n" +
                                                 "by Stephen A. Capperell\n" +
-                                                "© 2007-2008");
+                                                " 2007-2008");
          }
          
          //TODO: Add help text to dialog and change jmi variable name if needed
