@@ -158,9 +158,9 @@ public class EdgeConvertGUI {
       jmiDTHelpRelation.setMnemonic(KeyEvent.VK_2);
       jmiDTHelpRelation.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpRelation);
-      jmiDTHelp3 = new JMenuItem("Help 3");
-      jmiDTHelp3.setMnemonic(KeyEvent.VK_3);
-      jmiDTHelp3.addActionListener(menuListener);
+      jmiDTHelpDiagram = new JMenuItem("Edge Diagram Information");
+      jmiDTHelpDiagram.setMnemonic(KeyEvent.VK_3);
+      jmiDTHelpDiagram.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelp3);
       
       jfcEdge = new JFileChooser();
@@ -1337,8 +1337,14 @@ public class EdgeConvertGUI {
 
                     "Defining a Relation", JOptionPane.INFORMATION_MESSAGE);
          }
-         else if ((ae.getSource() == jmiDTHelp3) || (ae.getSource() == jmiDRHelp3)) {
-            JOptionPane.showMessageDialog(null, "HELP TEXT HERE");
+         else if ((ae.getSource() == jmiDTHelpDiagram) || (ae.getSource() == jmiDRHelp3)) {
+            JOptionPane.showMessageDialog(null, "Edge Diagrams" 
+                                          + "\n" 
+                                          + "\n Edge Diagrams are a type of flow chart, block diagram, org charts, family trees or data flow diagrams ending in a .edg file name."
+                                          + "\n Creating Edge Diagrams involves the use of the Pacestar Software."
+                                          + "\n Which can be downloaded at 'www.pacestar.com/edge/'."
+                                          + "\n You can open your .edg files directly from the File menu item within the top navigation of this program.", 
+                                          "Edge Diagram Information", JOptionPane.INFORMATION_MESSAGE);
          }
       } // EdgeMenuListener.actionPerformed()
    } // EdgeMenuListener
