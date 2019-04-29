@@ -55,7 +55,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDTMenuBar;
    static JMenu jmDTFile, jmDTOptions, jmDTHelp;
    static JMenuItem jmiDTOpenEdge, jmiDTOpenSave, jmiDTSave, jmiDTSaveAs, jmiDTExit, jmiDTOptionsOutputLocation, jmiDTOptionsShowProducts, jmiDTHelpAbout;
-   static JMenuItem jmiDTHelpDDL, jmiDTHelp2, jmiDTHelp3;  //TODO: change variable names
+   static JMenuItem jmiDTHelpDDL, jmiDTHelpRelation, jmiDTHelp3;  //TODO: change variable names
    
    //Define Relations screen objects
    static JFrame jfDR;
@@ -68,7 +68,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDRMenuBar;
    static JMenu jmDRFile, jmDROptions, jmDRHelp;
    static JMenuItem jmiDROpenEdge, jmiDROpenSave, jmiDRSave, jmiDRSaveAs, jmiDRExit, jmiDROptionsOutputLocation, jmiDROptionsShowProducts, jmiDRHelpAbout;
-   static JMenuItem jmiDRHelpDDL, jmiDRHelp2, jmiDRHelp3;  //TODO: change variable names
+   static JMenuItem jmiDRHelpDDL, jmiDRHelpRelation, jmiDRHelp3;  //TODO: change variable names
    
    public EdgeConvertGUI() {
       menuListener = new EdgeMenuListener();
@@ -154,13 +154,13 @@ public class EdgeConvertGUI {
       jmiDTHelpDDL.setMnemonic(KeyEvent.VK_1);
       jmiDTHelpDDL.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpDDL);
-      jmiDTHelp2 = new JMenuItem("Help 2");
-      jmiDTHelp2.setMnemonic(KeyEvent.VK_2);
-      jmiDTHelp2.addActionListener(menuListener);
-      jmDTHelp.add(jmiDTHelp2);
-      jmiDTHelp3 = new JMenuItem("Help 3");
-      jmiDTHelp3.setMnemonic(KeyEvent.VK_3);
-      jmiDTHelp3.addActionListener(menuListener);
+      jmiDTHelpRelation = new JMenuItem("Defining a Relation");
+      jmiDTHelpRelation.setMnemonic(KeyEvent.VK_2);
+      jmiDTHelpRelation.addActionListener(menuListener);
+      jmDTHelp.add(jmiDTHelpRelation);
+      jmiDTHelpDiagram = new JMenuItem("Edge Diagram Information");
+      jmiDTHelpDiagram.setMnemonic(KeyEvent.VK_3);
+      jmiDTHelpDiagram.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelp3);
       
       jfcEdge = new JFileChooser();
@@ -552,10 +552,10 @@ public class EdgeConvertGUI {
       jmiDRHelpDDL.setMnemonic(KeyEvent.VK_1);
       jmiDRHelpDDL.addActionListener(menuListener);
       jmDRHelp.add(jmiDRHelpDDL);
-      jmiDRHelp2 = new JMenuItem("Help 2");
-      jmiDRHelp2.setMnemonic(KeyEvent.VK_2);
-      jmiDRHelp2.addActionListener(menuListener);
-      jmDRHelp.add(jmiDRHelp2);
+      jmiDRHelpRelation = new JMenuItem("Help 2");
+      jmiDRHelpRelation.setMnemonic(KeyEvent.VK_2);
+      jmiDRHelpRelation.addActionListener(menuListener);
+      jmDRHelp.add(jmiDRHelpRelation);
       jmiDRHelp3 = new JMenuItem("Help 3");
       jmiDRHelp3.setMnemonic(KeyEvent.VK_3);
       jmiDRHelp3.addActionListener(menuListener);
@@ -1171,16 +1171,22 @@ public class EdgeConvertGUI {
    
    class CreateDDLButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
-         while (outputDir == null) {
+         if (outputDir == null) {
             JOptionPane.showMessageDialog(null, "You have not selected a path that contains valid output definition files yet.\nPlease select a path now.");
             setOutputDir();
          }
-         getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
-         sqlString = getSQLStatements();
-         if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
-            return;
+
+         //Only execute this code if the user actually chose a path (ie. if they hit cancel, function will return
+         if (outputDir != null) {
+            getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
+            sqlString = getSQLStatements();
+
+            if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
+                  return;
+            }
+
+            writeSQL(sqlString);
          }
-         writeSQL(sqlString);
       }
    }
 
@@ -1302,7 +1308,7 @@ public class EdgeConvertGUI {
          if ((ae.getSource() == jmiDTHelpAbout) || (ae.getSource() == jmiDRHelpAbout)) {
             JOptionPane.showMessageDialog(null, "EdgeConvert ERD To DDL Conversion Tool\n" +
                                                 "by Stephen A. Capperell\n" +
-                                                "© 2007-2008");
+                                                " 2007-2008");
          }
          
          //TODO: Add help text to dialog and change jmi variable name if needed
@@ -1311,19 +1317,34 @@ public class EdgeConvertGUI {
             JOptionPane.showMessageDialog(null, "1) Open an edge or saved file under File menu item"
                                             + "\n2) Use interface to make any changes to tables and relations"
                                             + "\n3) Go to Options => \"Set Output File Definition Location\""
-                                            + "\n4) Using the file chooser, navigate to a directory that contains a java file with a class that extends EdgeConvertCreateDDL (e.g. CreateDDLMySQL)."
-                                            + "\n    Make sure that this class has been compiled (i.e. that there's a .class file with the same name in the directory).  Select this directory."
-                                            + "\n5) You will see a message listing which products may be used to create DDL statements.  Select OK."
-                                            + "\n6) Click \"Create DDL\" button at bottom right, select a product from the dropdown, and click OK."
-                                            + "\n7) Enter a database name as prompted and click OK."
-                                            + "\n8) Determine where you want to save the resulting SQL file using the file chooser.",
+                                            + "\n4) Using the file chooser, navigate to a directory that contains a java file with a class that extends EdgeConvertCreateDDL (e.g. CreateDDLMySQL)"
+                                            + "\n    Make sure that this class has been compiled (i.e. that there's a .class file with the same name in the directory), select this directory"
+                                            + "\n5) You will see a message listing which products may be used to create DDL statements, select OK"
+                                            + "\n6) Click \"Create DDL\" button at bottom right, select a product from the dropdown, and click OK"
+                                            + "\n7) Enter a database name as prompted and click OK"
+                                            + "\n8) Determine where you want to save the resulting SQL file using the file chooser",
             "Creating a DDL Help", JOptionPane.INFORMATION_MESSAGE);
          }
-         else if ((ae.getSource() == jmiDTHelp2) || (ae.getSource() == jmiDRHelp2)) {
-            JOptionPane.showMessageDialog(null, "HELP TEXT HERE");
+         else if ((ae.getSource() == jmiDTHelpRelation) || (ae.getSource() == jmiDRHelpRelation)) {
+            JOptionPane.showMessageDialog(null, "1) Open an edge or saved file under File menu item"
+                                             + "\n2) Click the \"Define Relations\" button in the bottom left of the window"
+                                             + "\n3) Choose and click on one of the items listed under \"Tables With Relations\" heading to highlight the item"
+                                             + "\n4) Choose and click on one of the items listed under \"Related Tables\" heading to highlight the item"
+                                             + "\n5) Choose which item under the \"Fields in Related Tables\" heading you would like to bind to the chosen related table"
+                                             + "\n6) Press the \"Bind/Unbind Relation\" button at the bottom of the window to modify the current relation between the selected items",
+
+
+
+                    "Defining a Relation", JOptionPane.INFORMATION_MESSAGE);
          }
-         else if ((ae.getSource() == jmiDTHelp3) || (ae.getSource() == jmiDRHelp3)) {
-            JOptionPane.showMessageDialog(null, "HELP TEXT HERE");
+         else if ((ae.getSource() == jmiDTHelpDiagram) || (ae.getSource() == jmiDRHelp3)) {
+            JOptionPane.showMessageDialog(null, "Edge Diagrams" 
+                                          + "\n" 
+                                          + "\n Edge Diagrams are a type of flow chart, block diagram, org charts, family trees or data flow diagrams ending in a .edg file name."
+                                          + "\n Creating Edge Diagrams involves the use of the Pacestar Software."
+                                          + "\n Which can be downloaded at 'www.pacestar.com/edge/'."
+                                          + "\n You can open your .edg files directly from the File menu item within the top navigation of this program.", 
+                                          "Edge Diagram Information", JOptionPane.INFORMATION_MESSAGE);
          }
       } // EdgeMenuListener.actionPerformed()
    } // EdgeMenuListener
