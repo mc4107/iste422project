@@ -55,7 +55,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDTMenuBar;
    static JMenu jmDTFile, jmDTOptions, jmDTHelp;
    static JMenuItem jmiDTOpenEdge, jmiDTOpenSave, jmiDTSave, jmiDTSaveAs, jmiDTExit, jmiDTOptionsOutputLocation, jmiDTOptionsShowProducts, jmiDTHelpAbout;
-   static JMenuItem jmiDTHelpDDL, jmiDTHelpRelation, jmiDTHelpDiagram;  //TODO: change variable names
+   static JMenuItem jmiDTHelpDDL, jmiDTHelpRelation, jmiDTHelpDiagram;
    
    //Define Relations screen objects
    static JFrame jfDR;
@@ -68,7 +68,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDRMenuBar;
    static JMenu jmDRFile, jmDROptions, jmDRHelp;
    static JMenuItem jmiDROpenEdge, jmiDROpenSave, jmiDRSave, jmiDRSaveAs, jmiDRExit, jmiDROptionsOutputLocation, jmiDROptionsShowProducts, jmiDRHelpAbout;
-   static JMenuItem jmiDRHelpDDL, jmiDRHelpRelation, jmiDRHelp3;  //TODO: change variable names
+   static JMenuItem jmiDRHelpDDL, jmiDRHelpRelation, jmiDRHelp3;
    
    public EdgeConvertGUI() {
       menuListener = new EdgeMenuListener();
@@ -102,6 +102,7 @@ public class EdgeConvertGUI {
       jmbDTMenuBar = new JMenuBar();
       jfDT.setJMenuBar(jmbDTMenuBar);
 
+      //file menu
       jmDTFile = new JMenu("File");
       jmDTFile.setMnemonic(KeyEvent.VK_F);
       jmbDTMenuBar.add(jmDTFile);
@@ -127,7 +128,8 @@ public class EdgeConvertGUI {
       jmDTFile.add(jmiDTSave);
       jmDTFile.add(jmiDTSaveAs);
       jmDTFile.add(jmiDTExit);
-      
+
+      //options menu
       jmDTOptions = new JMenu("Options");
       jmDTOptions.setMnemonic(KeyEvent.VK_O);
       jmbDTMenuBar.add(jmDTOptions);
@@ -141,6 +143,7 @@ public class EdgeConvertGUI {
       jmDTOptions.add(jmiDTOptionsOutputLocation);
       jmDTOptions.add(jmiDTOptionsShowProducts);
       
+      //help menu
       jmDTHelp = new JMenu("Help");
       jmDTHelp.setMnemonic(KeyEvent.VK_H);
       jmbDTMenuBar.add(jmDTHelp);
@@ -148,8 +151,6 @@ public class EdgeConvertGUI {
       jmiDTHelpAbout.setMnemonic(KeyEvent.VK_A);
       jmiDTHelpAbout.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpAbout);
-      
-      //TODO: Change menu item (and variable/mnemonic) names
       jmiDTHelpDDL = new JMenuItem("Creating a DDL");
       jmiDTHelpDDL.setMnemonic(KeyEvent.VK_1);
       jmiDTHelpDDL.addActionListener(menuListener);
@@ -163,18 +164,22 @@ public class EdgeConvertGUI {
       jmiDTHelpDiagram.addActionListener(menuListener);
       jmDTHelp.add(jmiDTHelpDiagram);
       
+      //create filechooser for edg or sav files
       jfcEdge = new JFileChooser();
       jfcOutputDir = new JFileChooser();
 	   effEdge = new ExampleFileFilter("edg", "Edge Diagrammer Files");
    	effSave = new ExampleFileFilter("sav", "Edge Convert Save Files");
       jfcOutputDir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
+      //bottom panel for nav buttons
       jpDTBottom = new JPanel(new GridLayout(1, 2));
-
+      
+      //Create DDL button
       jbDTCreateDDL = new JButton("Create DDL");
       jbDTCreateDDL.setEnabled(false);
       jbDTCreateDDL.addActionListener(createDDLListener);
 
+      //Define relations button
       jbDTDefineRelations = new JButton (DEFINE_RELATIONS);
       jbDTDefineRelations.setEnabled(false);
       jbDTDefineRelations.addActionListener(
@@ -187,11 +192,13 @@ public class EdgeConvertGUI {
             }
          }
       );
-
+      
+      //add controls panel to bottom of frame
       jpDTBottom.add(jbDTDefineRelations);
       jpDTBottom.add(jbDTCreateDDL);
       jfDT.getContentPane().add(jpDTBottom, BorderLayout.SOUTH);
       
+      //tables list panel
       jpDTCenter = new JPanel(new GridLayout(1, 3));
       jpDTCenterRight = new JPanel(new GridLayout(1, 2));
       dlmDTTablesAll = new DefaultListModel();
@@ -217,6 +224,7 @@ public class EdgeConvertGUI {
          }
       );
       
+      //fields list panel
       dlmDTFieldsTablesAll = new DefaultListModel();
       jlDTFieldsTablesAll = new JList(dlmDTFieldsTablesAll);
       jlDTFieldsTablesAll.addListSelectionListener(
@@ -403,15 +411,8 @@ public class EdgeConvertGUI {
                            JOptionPane.showMessageDialog(null, "\"" + result + "\" is not a double or is outside the bounds of valid double values.");
                         }
                         break;
-                     case 4: //Timestamp
-                        try {
-                           jtfDTDefaultValue.setText(result);
-                           goodData = true;
-                        }
-                        catch (Exception e) {
-                           e.printStackTrace();
-                        }
-                        break;
+                     default: //shouldn't reach this as long as valid datatype
+                              break;
                   }
                } while (!goodData);
                int selIndex = jlDTFieldsTablesAll.getSelectedIndex();
@@ -1193,7 +1194,10 @@ public class EdgeConvertGUI {
    class EdgeMenuListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
          int returnVal;
-         if ((ae.getSource() == jmiDTOpenEdge) || (ae.getSource() == jmiDROpenEdge)) {
+         Object actionSrc = ae.getSource();
+         
+         //open edge file menu item selected
+         if ((actionSrc == jmiDTOpenEdge) || (actionSrc == jmiDROpenEdge)) {
             if (!dataSaved) {
                int answer = JOptionPane.showConfirmDialog(null, "You currently have unsaved data. Continue?",
                                                           "Are you sure?", JOptionPane.YES_NO_OPTION);
@@ -1232,7 +1236,8 @@ public class EdgeConvertGUI {
             dataSaved = true;
          }
          
-         if ((ae.getSource() == jmiDTOpenSave) || (ae.getSource() == jmiDROpenSave)) {
+         //open saved file menu item selected
+         else if ((actionSrc == jmiDTOpenSave) || (actionSrc == jmiDROpenSave)) {
             if (!dataSaved) {
                int answer = JOptionPane.showConfirmDialog(null, "You currently have unsaved data. Continue?",
                                                           "Are you sure?", JOptionPane.YES_NO_OPTION);
@@ -1267,17 +1272,16 @@ public class EdgeConvertGUI {
             }
             dataSaved = true;
          }
-         
-         if ((ae.getSource() == jmiDTSaveAs) || (ae.getSource() == jmiDRSaveAs) ||
-             (ae.getSource() == jmiDTSave) || (ae.getSource() == jmiDRSave)) {
-            if ((ae.getSource() == jmiDTSaveAs) || (ae.getSource() == jmiDRSaveAs)) {
-               saveAs();
-            } else {
-               writeSave();
-            }
+         //save as menu item selected
+         else if ((actionSrc == jmiDTSaveAs) || (actionSrc == jmiDRSaveAs)) {
+            saveAs();
          }
-         
-         if ((ae.getSource() == jmiDTExit) || (ae.getSource() == jmiDRExit)) {
+         //user selected save menu item
+         else if ((actionSrc == jmiDTSave) || (actionSrc == jmiDRSave)){
+            writeSave();
+         }
+         //user selected exit
+         else if ((actionSrc == jmiDTExit) || (actionSrc == jmiDRExit)) {
             if (!dataSaved) {
                int answer = JOptionPane.showOptionDialog(null,
                    "You currently have unsaved data. Would you like to save?",
@@ -1296,23 +1300,22 @@ public class EdgeConvertGUI {
             }
             System.exit(0); //No was selected
          }
-         
-         if ((ae.getSource() == jmiDTOptionsOutputLocation) || (ae.getSource() == jmiDROptionsOutputLocation)) {
+         //user selected set output location
+         else if ((actionSrc == jmiDTOptionsOutputLocation) || (actionSrc == jmiDROptionsOutputLocation)) {
             setOutputDir();
          }
-
-         if ((ae.getSource() == jmiDTOptionsShowProducts) || (ae.getSource() == jmiDROptionsShowProducts)) {
+         //user selected show products menu item
+         else if ((actionSrc == jmiDTOptionsShowProducts) || (actionSrc == jmiDROptionsShowProducts)) {
             JOptionPane.showMessageDialog(null, "The available products to create DDL statements are:\n" + displayProductNames());
          }
-         
-         if ((ae.getSource() == jmiDTHelpAbout) || (ae.getSource() == jmiDRHelpAbout)) {
+         //user selected Help > About
+         else if ((actionSrc == jmiDTHelpAbout) || (actionSrc == jmiDRHelpAbout)) {
             JOptionPane.showMessageDialog(null, "EdgeConvert ERD To DDL Conversion Tool\n" +
                                                 "by Stephen A. Capperell\n" +
                                                 " 2007-2008");
          }
-         
-         //TODO: Add help text to dialog and change jmi variable name if needed
-         if ((ae.getSource() == jmiDTHelpDDL) || (ae.getSource() == jmiDRHelpDDL)) {
+         //user selected Help > Creating a DDL
+         else if ((actionSrc == jmiDTHelpDDL) || (actionSrc == jmiDRHelpDDL)) {
             JOptionPane joPane = new JOptionPane();
             JOptionPane.showMessageDialog(null, "1) Open an edge or saved file under File menu item"
                                             + "\n2) Use interface to make any changes to tables and relations"
@@ -1325,7 +1328,8 @@ public class EdgeConvertGUI {
                                             + "\n8) Determine where you want to save the resulting SQL file using the file chooser",
             "Creating a DDL Help", JOptionPane.INFORMATION_MESSAGE);
          }
-         else if ((ae.getSource() == jmiDTHelpRelation) || (ae.getSource() == jmiDRHelpRelation)) {
+         //user selected Help > Defining a Relation
+         else if ((actionSrc == jmiDTHelpRelation) || (actionSrc == jmiDRHelpRelation)) {
             JOptionPane.showMessageDialog(null, "1) Open an edge or saved file under File menu item"
                                              + "\n2) Click the \"Define Relations\" button in the bottom left of the window"
                                              + "\n3) Choose and click on one of the items listed under \"Tables With Relations\" heading to highlight the item"
@@ -1337,7 +1341,8 @@ public class EdgeConvertGUI {
 
                     "Defining a Relation", JOptionPane.INFORMATION_MESSAGE);
          }
-         else if ((ae.getSource() == jmiDTHelpDiagram) || (ae.getSource() == jmiDRHelp3)) {
+         //user selected Help > Edge Diagram Information
+         else if ((actionSrc == jmiDTHelpDiagram) || (actionSrc == jmiDRHelp3)) {
             JOptionPane.showMessageDialog(null, "Edge Diagrams" 
                                           + "\n" 
                                           + "\n Edge Diagrams are a type of flow chart, block diagram, org charts, family trees or data flow diagrams ending in a .edg file name."

@@ -195,7 +195,7 @@ public class EdgeConvertFileParser {
       StringTokenizer stTables, stNatFields, stRelFields, stNatRelFields, stField;
       EdgeTable tempTable;
       EdgeField tempField;
-      currentLine = br.readLine();
+      currentLine = br.readLine();  //skipping "#TABLES#" line
       currentLine = br.readLine(); //this should be "Table: "
       while (currentLine.startsWith("Table: ")) {
          numFigure = Integer.parseInt(currentLine.substring(currentLine.indexOf(" ") + 1)); //get the Table number
