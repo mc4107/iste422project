@@ -55,7 +55,7 @@ public class EdgeConvertGUI {
    static JMenuBar jmbDTMenuBar;
    static JMenu jmDTFile, jmDTOptions, jmDTHelp;
    static JMenuItem jmiDTOpenEdge, jmiDTOpenSave, jmiDTSave, jmiDTSaveAs, jmiDTExit, jmiDTOptionsOutputLocation, jmiDTOptionsShowProducts, jmiDTHelpAbout;
-   static JMenuItem jmiDTHelpDDL, jmiDTHelpRelation, jmiDTHelp3;  //TODO: change variable names
+   static JMenuItem jmiDTHelpDDL, jmiDTHelpRelation, jmiDTHelpDiagram;  //TODO: change variable names
    
    //Define Relations screen objects
    static JFrame jfDR;
@@ -161,7 +161,7 @@ public class EdgeConvertGUI {
       jmiDTHelpDiagram = new JMenuItem("Edge Diagram Information");
       jmiDTHelpDiagram.setMnemonic(KeyEvent.VK_3);
       jmiDTHelpDiagram.addActionListener(menuListener);
-      jmDTHelp.add(jmiDTHelp3);
+      jmDTHelp.add(jmiDTHelpDiagram);
       
       jfcEdge = new JFileChooser();
       jfcOutputDir = new JFileChooser();
@@ -409,7 +409,7 @@ public class EdgeConvertGUI {
                            goodData = true;
                         }
                         catch (Exception e) {
-                           
+                           e.printStackTrace();
                         }
                         break;
                   }
